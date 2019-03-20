@@ -1,0 +1,3 @@
+# OpenTHC Media Wiki Skin
+
+

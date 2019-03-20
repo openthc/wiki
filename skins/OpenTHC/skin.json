@@ -1,0 +1,22 @@
+{
+	"name": "OpenTHC",
+	"version": "420.19.353",
+	"author": "OpenTHC",
+	"url": "https://openthc.org/wiki/skin",
+	"descriptionmsg": "OpenTHC",
+	"namemsg": "openthc name",
+	"license-name": "MIT",
+	"type": "skin",
+	"ValidSkinNames": {
+		"openthc": "OpenTHC"
+	},
+	"AutoloadClasses": {
+		"SkinOpenTHC": "Skin.php",
+		"OpenTHC_Template": "Template.php"
+	},
+	"MessagesDirs": {
+		"OpenTHC": [
+			"i18n"
+		]
+	}
+}

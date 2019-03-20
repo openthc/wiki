@@ -1,0 +1,19 @@
+.main-wrap {
+	display: flex;
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+}
+
+.main-wrap .main-menu {
+	height: 100%;
+	flex: 1 1 20%;
+	width: 20%;
+}
+
+.main-wrap .main-body {
+	height: 100%;
+	flex: 1 1 80%;
+	width: 80%;
+}
