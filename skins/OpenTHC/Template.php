@@ -13,6 +13,8 @@ class OpenTHC_Template extends BaseTemplate {
 	public function execute()
 	{
 		$this->pileOfTools = $this->getPageTools();
+
+		// Login/User Menu
 		$userLinks = $this->getUserLinks();
 
 		// Open html, body elements, etc
@@ -62,9 +64,9 @@ EOH;
 		$html .= Html::closeElement('nav');
 
 		$html .= '<div class="main-wrap">';
-		$html .= '<div class="main-menu">';
-			$html.= '<h1>Main Menu</h1>';
 
+		$html .= '<div class="main-menu">';
+		$html .= '<div style="margin:0.25em; padding: 0;">';
 			// $html.= '<div>';
 			// $html.= $this->getLogo( 'p-logo', 'image' );
 			// $html.= '</div>';
@@ -76,21 +78,38 @@ EOH;
 			$html.= '<div class="menu-main-part0">';
 			$html.= $this->getSidebarChunk(
 				'site-tools',
-				'timeless-sitetools',
+				'openthc-sitetools',
 				$this->getPortlet(
 					'tb',
 					$this->pileOfTools['general'],
-					'timeless-sitetools'
+					'openthc-sitetools'
 				)
 			);
 			$html.= '</div>';
 
-
+			$html.= Html::rawElement( 'div', [ 'id' => 'mw-related-navigation' ],
+				$this->getPageToolSidebar() .
+				$this->getInterlanguageLinks() .
+				$this->getCategories()
+			);
 		$html .= '</div>';
+		$html .= '</div>'; // /.main-menu
 
 		$html .= '<div class="main-body">';
 
 			$html .= Html::rawElement('h1', [ 'id' => 'firstHeading', 'class' => 'firstHeading', 'lang' => $this->get( 'pageLanguage' ) ], $this->get( 'title' ) );
+
+
+//////////
+			$x = $this->getPortlet(
+                                                                'namespaces',
+                                                                $this->pileOfTools['namespaces'],
+                                                                'timeless-namespaces'
+                                                        );
+			$html.= $x;
+			$html.= $this->getPortlet('views', $this->pileOfTools['page-primary'], 'timeless-pagetools');
+//////////
+
 
 			$html.= '<div class="main-body-content-sub">';
 			$html.= $this->getContentSub();
@@ -115,11 +134,6 @@ EOH;
 		// 					'timeless-sitetools'
 		// 				)
 		// 			)
-		// 		) .
-		// 		Html::rawElement( 'div', [ 'id' => 'mw-related-navigation' ],
-		// 			$this->getPageToolSidebar() .
-		// 			$this->getInterlanguageLinks() .
-		// 			$this->getCategories()
 		// 		) .
 		// 		Html::rawElement( 'div', [ 'id' => 'mw-content' ],
 		// 			Html::rawElement( 'div', [ 'id' => 'content', 'class' => 'mw-body',  'role' => 'main' ],
@@ -162,6 +176,34 @@ EOH;
 
 		$html .= $this->getFooter();
 
+		$html .= '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>';
+		//$html .= '<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js" integrity="sha256-vrn14y7WH7zgEElyQqm2uCGSQrX/xjYDjniRUQx3NyU=" crossorigin="anonymous"></script>';
+		$html .= '<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha256-fzFFyH01cBVPYzl16KT40wqjhgPtq6FFUB6ckN2+GGw=" crossorigin="anonymous"></script>';
+
+
+		$html .= <<<EOS
+<script>
+$(function() {
+
+	$(document).on('swipeLeft', function() {
+		$('.main-menu').addClass('shut');
+	});
+
+	$(document).on('keydown', function(e) {
+		switch (e.key) {
+		case 'ArrowLeft':
+			$('.main-menu').addClass('shut');
+			break;
+		case 'ArrowRight':
+			$('.main-menu').removeClass('shut');
+			break;
+		}
+		console.log(e);
+	});
+
+});
+</script>
+EOS;
 		// BaseTemplate::printTrail() stuff (has no get version)
 		// Required for RL to run
 		// $html .= MWDebug::getDebugHTML( $this->getSkin()->getContext() );
@@ -196,7 +238,8 @@ EOH;
 	 * @return string html
 	 * @since 1.29
 	 */
-	protected function getPortlet( $name, $content, $msg = null ) {
+	protected function getPortlet( $name, $content, $msg = null )
+	{
 		if ( $msg === null ) {
 			$msg = $name;
 		} elseif ( is_array( $msg ) ) {
@@ -292,12 +335,6 @@ EOH;
 		$html .= Html::rawElement(
 			'div',
 			[ 'id' => Sanitizer::escapeId( $id ), 'class' => 'sidebar-chunk' ],
-			Html::rawElement( 'h2', [],
-				Html::element( 'span', [],
-					$this->getMsg( $headerMessage )->text()
-				) .
-				Html::element( 'div', [ 'class' => 'pokey' ] )
-			) .
 			Html::rawElement( 'div', [ 'class' => 'sidebar-inner' ], $content )
 		);
 
@@ -597,13 +634,13 @@ EOH;
 		$pileOfTools = $this->getToolbox();
 		if ( $namespace >= 0 ) {
 			$pileOfTools['pagelog'] = [
-				'text' => $this->getMsg( 'timeless-pagelog' )->text(),
+				'text' => 'POT-PAGE-LOG', // $this->getMsg( 'timeless-pagelog' )->text(),
 				'href' => SpecialPage::getTitleFor( 'Log', $title->getPrefixedText() )->getLocalURL(),
 				'id' => 't-pagelog'
 			];
 		}
 		$pileOfTools['more'] = [
-			'text' => $this->getMsg( 'timeless-more' )->text(),
+			'text' => 'POT-MORE', // $this->getMsg( 'timeless-more' )->text(),
 			'id' => 'ca-more',
 			'class' => 'dropdown-toggle'
 		];
