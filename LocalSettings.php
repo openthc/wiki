@@ -37,15 +37,15 @@ $wgResourceBasePath = $wgScriptPath;
 ## The URL path to the logo.  Make sure you change this from the default,
 ## or else you'll overwrite your logo when you upgrade!
 $wgLogo = "$wgResourceBasePath/resources/assets/wiki.png";
-$wgLogo = "https://openthc.com/img/icon.png";
+$wgLogo = "https://cdn.openthc.com/img/icon.png";
 
 ## UPO means: this is also a user preference option
 
 $wgEnableEmail = true;
 $wgEnableUserEmail = true; # UPO
 
-$wgEmergencyContact = "wiki@openthc.org";
-$wgPasswordSender = "wiki@openthc.org";
+$wgEmergencyContact = "wiki@openthc.dev";
+$wgPasswordSender = "wiki@openthc.dev";
 
 $wgEnotifUserTalk = false; # UPO
 $wgEnotifWatchlist = false; # UPO
@@ -56,7 +56,7 @@ $wgDBtype = "postgres";
 $wgDBserver = "localhost";
 $wgDBname = "openthc_wiki";
 $wgDBuser = "openthc_wiki";
-$wgDBpassword = "openthc_wiki";
+$wgDBpassword = "NOT_A_SECRET";
 
 # Postgres specific settings
 $wgDBport = "5432";
@@ -93,14 +93,14 @@ $wgShellLocale = "C.UTF-8";
 # Site language code, should be one of the list in ./languages/data/Names.php
 $wgLanguageCode = "en";
 
-$wgSecretKey = "4e6f20415cd10e67da3b44817b2642901441d53a1159b32d762595c1102239e1";
+$wgSecretKey = "NOT_A_SECRET";
 
 # Changing this will log out all existing sessions.
 $wgAuthenticationTokenVersion = "1";
 
 # Site upgrade key. Must be set to a string (default provided) to turn on the
 # web installer while LocalSettings.php is in place
-$wgUpgradeKey = "00f18f01bab4a450";
+$wgUpgradeKey = "NOT_A_SECRET";
 
 ## For attaching licensing metadata to pages, and displaying an
 ## appropriate copyright notice / icon. GNU Free Documentation
@@ -133,7 +133,6 @@ wfLoadSkin( 'Vector' );
 
 wfLoadExtension( 'Cite' );
 wfLoadSkin( 'OpenTHC' );
-
 
 // $wgAllowExternalImages = true;
 $wgAllowImageTag = true;
