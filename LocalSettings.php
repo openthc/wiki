@@ -42,7 +42,7 @@ $wgLogo = "https://cdn.openthc.com/img/icon.png";
 ## UPO means: this is also a user preference option
 
 $wgEnableEmail = true;
-$wgEnableUserEmail = true; # UPO
+$wgEnableUserEmail = false; # UPO
 
 $wgEmergencyContact = "wiki@openthc.dev";
 $wgPasswordSender = "wiki@openthc.dev";
@@ -69,6 +69,7 @@ $wgMemCachedServers = [];
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then set this to true:
 $wgEnableUploads = true;
+$wgFileExtensions[] = 'pdf';
 $wgUseImageMagick = true;
 $wgImageMagickConvertCommand = "/usr/bin/convert";
 
@@ -119,14 +120,14 @@ $wgGroupPermissions['*']['edit'] = false;
 
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'vector', 'monobook':
-$wgDefaultSkin = "vector";
+$wgDefaultSkin = 'timeless';
 //$wgDefaultSkin = "openthc";
 
 # Enabled skins.
 # The following skins were automatically enabled:
-wfLoadSkin( 'MonoBook' );
+// wfLoadSkin( 'MonoBook' );
 wfLoadSkin( 'Timeless' );
-wfLoadSkin( 'Vector' );
+//wfLoadSkin( 'Vector' );
 
 # End of automatically generated settings.
 # Add more configuration options below.
